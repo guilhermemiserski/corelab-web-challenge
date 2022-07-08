@@ -1,10 +1,13 @@
+import styles from "./Button.module.scss"
+
 interface IButton {
-  onClick: () => void;
+  type?: string;
+  onClick?: () => void;
   text: string;
 }
 
 const Button = (props: IButton) => {
-  return <button onClick={props.onClick}>{props.text}</button>;
+  return <button className={styles.button} onClick={props.onClick}>{props.text}</button>;
 };
 
 export default Button;

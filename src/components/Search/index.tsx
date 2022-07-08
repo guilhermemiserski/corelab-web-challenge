@@ -1,3 +1,5 @@
+import styles from './Search.module.scss'
+
 interface ISearch {
   placeholder: string;
   value: string;
@@ -6,7 +8,7 @@ interface ISearch {
 
 const Search = (props: ISearch) => {
   return (
-    <input type="text" placeholder={props.placeholder} value={props.value} />
+    <input className={styles.searchInput} type="text" placeholder={props.placeholder}/>
   );
 };
 

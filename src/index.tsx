@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.module.scss';
 import VehiclesPage from './pages/Vehicles';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AddVehiclesPage from './pages/AddVehicles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <VehiclesPage />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<VehiclesPage />}></Route>
+      <Route path="adicionar" element={<AddVehiclesPage />}></Route>
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,13 @@
+.searchInput {
+    border-radius: 100px;
+    background-color: #65DCC74D;
+    font-size: larger;
+    padding: 18px;
+    border: none;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.searchInput:focus {
+    outline: 2px solid #65DCC7CC;
+}
