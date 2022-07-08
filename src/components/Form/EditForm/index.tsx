@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Form.module.scss"
+import styles from "../Form.module.scss"
 
 
- function Form() {
+ function EditForm() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [brand, setBrand] = useState("");
@@ -28,7 +28,7 @@ import styles from "./Form.module.scss"
             })
           };
           
-          fetch("http://localhost:5000/veiculos", options)
+          fetch("http://localhost:5000/veiculos" , options)
             .then(res => res.json())
             .then(json => console.log(json))
             .catch(err => console.error('error:' + err));
@@ -89,4 +89,4 @@ import styles from "./Form.module.scss"
     )
 }
 
-export default Form;
+export default EditForm;

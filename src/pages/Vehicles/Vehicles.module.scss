@@ -26,3 +26,15 @@
 
   }
 }
+
+.searchInputDiv {
+  display: flex;
+  flex-direction: row;
+  align-items : center;
+  justify-content : center;
+}
+
+.filterIcon {
+  color: black;
+  padding-left: 12px;
+}
