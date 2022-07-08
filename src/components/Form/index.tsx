@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { json } from "stream/consumers";
+import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.scss"
 
 
@@ -11,6 +11,7 @@ import styles from "./Form.module.scss"
     const [plate, setPlate] = useState("");
     const [price, setPrice] = useState("");
     const [year, setYear] = useState("");
+    const navigate = useNavigate();
 
   let handleSubmit = async (e : any) => {
     e.preventDefault();
@@ -34,6 +35,8 @@ import styles from "./Form.module.scss"
     } catch (err) {
       console.log(err);
     }
+
+    setTimeout(() => navigate("/"), 1000);
   };
     
     return (
