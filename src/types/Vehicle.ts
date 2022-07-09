@@ -1,4 +1,5 @@
 export interface IVehicle {
+  brand: string;
   _id: string;
   name: string;
   description: string;

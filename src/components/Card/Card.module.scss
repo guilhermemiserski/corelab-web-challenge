@@ -1,7 +1,6 @@
 .Card {
   padding: 1.5rem;
   text-align: left;
-  color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
@@ -10,8 +9,8 @@
   &:hover,
   &:focus,
   &:active {
-    color: #0070f3;
-    border-color: #0070f3;
+    color: black;
+    border-color: black;
   }
 
   h2 {

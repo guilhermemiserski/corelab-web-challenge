@@ -24,7 +24,9 @@ import styles from "./Form.module.scss"
                 price,
                 description,
                 year,
-                color
+                color,
+                brand,
+                plate
             })
           };
           
@@ -62,13 +64,13 @@ import styles from "./Form.module.scss"
             <div>
             <label>
                 Cor:
-                <input required className={styles.input} type="text" placeholder='Vermelho' name="color" onChange={(e) => setColor(e.target.value)}/>
+                <input required className={styles.input} type="color" list="" name="color" onChange={(e) => setColor(e.target.value)}/>
             </label>
             </div>
             <div>
             <label>
                 Ano:
-                <input required className={styles.input} type="text" placeholder='2016' name="year" onChange={(e) => setYear(e.target.value)} />
+                <input required className={styles.input} type="number" placeholder='2016' name="year" onChange={(e) => setYear(e.target.value)} />
             </label>
             </div>
             <div>
@@ -80,7 +82,7 @@ import styles from "./Form.module.scss"
             <div>
             <label>
                 Preço:
-                <input required className={styles.input} type="text" placeholder='20000' name="price" onChange={(e) => setPrice(e.target.value)}/>
+                <input required className={styles.input} type="number" placeholder='20000' name="price" onChange={(e) => setPrice(e.target.value)}/>
             </label>
             </div>
 

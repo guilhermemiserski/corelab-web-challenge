@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFilter } from "react-icons/fa"
+import { BiCar } from "react-icons/bi";
 
 
 import { getVehicles } from "../../lib/api";
@@ -33,15 +34,15 @@ const VehiclesPage = () => {
       <main className={styles.main}>
         <div className={styles.searchInputDiv}>
         <Search placeholder="Buscar" value={search} onChange={() => {}} />
-        <FaFilter size={30} className={styles.filterIcon} ></FaFilter>
+        <FaFilter onClick={() => navigate("/filtrar")} size={30} className={styles.filterIcon} ></FaFilter>
         </div>
         <Button text="ADICIONAR" onClick={() => navigate("/adicionar")} />
         {vehicles.map((vehicle, index) => (
-          <Card id={vehicle._id} title={vehicle.name}>
+          <Card colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
             <p>Preço: {vehicle.price}</p>
             <p>Descrição: {vehicle.description} </p>
             <p>Ano: {vehicle.year}</p>
-            <p>Cor: {vehicle.color}</p>
+            <p>Cor: <BiCar className={styles.carIcon} size={18} style={{color:vehicle.color}}></BiCar></p>
           </Card>
         ))}
       </main>
