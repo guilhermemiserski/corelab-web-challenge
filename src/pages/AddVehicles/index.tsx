@@ -8,8 +8,8 @@ const AddVehiclesPage = () => {
 
     return (
         <>
-        <FaArrowLeft onClick={() => navigate("/home")} size={30} className={styles.iconBack}></FaArrowLeft>
-        <Form></Form>
+            <FaArrowLeft onClick={() => navigate("/home")} size={30} className={styles.iconBack}></FaArrowLeft>
+            <Form></Form>
         </>
     )
 }

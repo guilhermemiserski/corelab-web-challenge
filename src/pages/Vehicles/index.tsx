@@ -14,6 +14,7 @@ import styles from "./Vehicles.module.scss";
 const VehiclesPage = () => {
   const navigate = useNavigate();
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
+  const [filteredResults, setFilteredResults] = useState<IVehicle[]>([]);
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
@@ -25,26 +26,50 @@ const VehiclesPage = () => {
     fetchVehicles();
   }, []);
 
-  console.log({ vehicles });
-  
-  
+  const searchItems = (searchValue: string) => {
+    setSearch(searchValue);
+    if (search !== '') {
+      const filteredData = vehicles.filter((item) => {
+        return Object.values(item).join('').toLowerCase().includes(search.toLowerCase())
+      })
+      setFilteredResults(filteredData);
+    }
+    else {
+      setFilteredResults(vehicles);
+    }
+  }
 
-   return (
+  return (
     <div className={styles.Vehicles}>
       <main className={styles.main}>
         <div className={styles.searchInputDiv}>
-        <Search placeholder="Buscar" value={search} onChange={() => {}} />
-        <FaFilter onClick={() => navigate("/filtrar")} size={30} className={styles.filterIcon} ></FaFilter>
+          <Search placeholder="Buscar" onChange={(e) => searchItems(e.target.value)} />
+          <FaFilter onClick={() => navigate("/filtrar")} size={30} className={styles.filterIcon} ></FaFilter>
         </div>
         <Button text="ADICIONAR" onClick={() => navigate("/adicionar")} />
-        {vehicles.map((vehicle, index) => (
-          <Card colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
-            <p>Preço: {vehicle.price}</p>
-            <p>Descrição: {vehicle.description} </p>
-            <p>Ano: {vehicle.year}</p>
-            <p>Cor: <BiCar className={styles.carIcon} size={18} style={{color:vehicle.color}}></BiCar></p>
-          </Card>
-        ))}
+        {search.length > 1 ? (
+          filteredResults.map((vehicle, index) => {
+            return (
+              <Card key={index} colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
+                <p>Preço: {vehicle.price}</p>
+                <p>Descrição: {vehicle.description} </p>
+                <p>Ano: {vehicle.year}</p>
+                <p>Cor: <BiCar className={styles.carIcon} size={18} style={{ color: vehicle.color }}></BiCar></p>
+              </Card>
+            )
+          })
+        ) : (
+          vehicles.map((vehicle, index) => {
+            return (
+              <Card key={index} colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
+                <p>Preço: {vehicle.price}</p>
+                <p>Descrição: {vehicle.description} </p>
+                <p>Ano: {vehicle.year}</p>
+                <p>Cor: <BiCar className={styles.carIcon} size={18} style={{ color: vehicle.color }}></BiCar></p>
+              </Card>
+            )
+          })
+        )}
       </main>
     </div>
   );
