@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom"
 import { BsFilterLeft } from "react-icons/bs";
@@ -25,6 +25,7 @@ const VehiclesPage = () => {
       const payload = await getVehicles();
       setVehicles(payload);
     };
+
     fetchVehicles();
   }, []);
 
@@ -38,7 +39,7 @@ const VehiclesPage = () => {
       setFilteredResults(filteredData);
     }
     else {
-      setFilteredResults(vehicles);
+      setFilteredResults(vehicles)
     }
   }
 
@@ -61,7 +62,7 @@ const VehiclesPage = () => {
               </Card>
             )
           })
-        ) : (
+        ) : (objetoSearch === null ? (
           vehicles.map((vehicle, index) => {
             return (
               <Card key={index} colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
@@ -71,7 +72,17 @@ const VehiclesPage = () => {
                 <p>Cor: <BiCar className={styles.carIcon} size={18} style={{ color: vehicle.color }}></BiCar></p>
               </Card>
             )
+          })) : (objetoSearch.map((vehicle: { color: string; isFavorite: boolean; _id: string; name: string; description: string; brand: string; plate: string; year: number, price: number }, index: Key | null | undefined) => {
+            return (
+              <Card key={index} colorDefault={vehicle.color} isFavorite={vehicle.isFavorite} id={vehicle._id} title={vehicle.name} nameDefault={vehicle.name} descriptionDefault={vehicle.description} brandDefault={vehicle.brand} plateDefault={vehicle.plate} yearDefault={vehicle.year} priceDefault={vehicle.price}>
+                <p>Preço: {vehicle.price}</p>
+                <p>Descrição: {vehicle.description} </p>
+                <p>Ano: {vehicle.year}</p>
+                <p>Cor: <BiCar className={styles.carIcon} size={18} style={{ color: vehicle.color }}></BiCar></p>
+              </Card>
+            )
           })
+        )
         )}
       </main>
     </div>

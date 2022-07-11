@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { getVehicles } from "../../../lib/api";
-
-
 import { IVehicle } from "../../../types/Vehicle";
 
 import styles from "../Form.module.scss"
@@ -10,7 +9,6 @@ import styles from "../Form.module.scss"
 
 function FilterForm() {
     const [brand, setBrand] = useState("1");
-    const [color, setColor] = useState("1");
     const [year, setYear] = useState("1");
     const [minPrice, setMinPrice] = useState("1");
     const [maxPrice, setMaxPrice] = useState("1");
@@ -20,11 +18,11 @@ function FilterForm() {
 
     useEffect(() => {
         const fetchVehicles = async () => {
-          const payload = await getVehicles();
-          setVehicles(payload);
+            const payload = await getVehicles();
+            setVehicles(payload);
         };
         fetchVehicles();
-      }, []);
+    }, []);
 
     let handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -33,19 +31,20 @@ function FilterForm() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             };
-                console.log("http://localhost:5000/filtrar/" + brand + year);
-                fetch("http://localhost:5000/filtrar/" + brand + '/' + year + '/' + minPrice + '/' + maxPrice, options)
-                    .then(res => res.json())
-                    .then(json => console.log(json))
-                    .catch(err => console.error('error:' + err));
+            fetch("http://localhost:5000/filtrar/" + brand + '/' + year + '/' + minPrice + '/' + maxPrice, options)
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json);
+                    setTimeout(() => navigate("/home", { state: json }), 1000);
+                })
+
+                .catch(err => console.error('error:' + err));
         } catch (err) {
             console.log(err);
         }
-
-        setTimeout(() => navigate("/home"), 1000);
     };
 
-    
+
 
 
     return (
@@ -56,15 +55,6 @@ function FilterForm() {
                 <datalist id="brands">
                     {vehicles.map((vehicle, index) => <option key={index} value={vehicle.brand}></option>)}
                 </datalist>
-            </div>
-            <div>
-                <label>
-                    Cor:
-                    <input className={styles.input} type="color" name="color" list="colors" onChange={(e) => setColor(e.target.value)} />
-                    <datalist id="colors">
-                        {vehicles.map((vehicle, index) => <option key={index} value={vehicle.color}></option>)}
-                    </datalist>
-                </label>
             </div>
             <div>
                 <label>
