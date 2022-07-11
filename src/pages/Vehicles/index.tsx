@@ -20,12 +20,30 @@ const VehiclesPage = () => {
   const [filteredResults, setFilteredResults] = useState<IVehicle[]>([]);
   const [search, setSearch] = useState<string>("");
 
+
+  const init = () => {
+    if (objetoSearch.yearSearch !== '') {
+      const searchResult = vehicles.filter((item) => {
+        return Object.values(item).join('').toLowerCase().includes(objetoSearch.yearSearch.toLowerCase())
+      })
+      console.log(searchResult);
+      setFilteredResults(searchResult);
+
+    }
+    else {
+      setFilteredResults(vehicles);
+    }
+  }
+
   useEffect(() => {
     const fetchVehicles = async () => {
       const payload = await getVehicles();
       setVehicles(payload);
     };
     fetchVehicles();
+    if (objetoSearch !== null) {
+      init();
+    }
   }, []);
 
 
@@ -76,6 +94,7 @@ const VehiclesPage = () => {
       </main>
     </div>
   );
+
 };
 
 export default VehiclesPage;
