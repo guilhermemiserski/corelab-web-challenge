@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaFilter } from "react-icons/fa"
+import { useLocation } from "react-router-dom"
+import { BsFilterLeft } from "react-icons/bs";
 import { BiCar } from "react-icons/bi";
 
 
@@ -13,6 +14,8 @@ import styles from "./Vehicles.module.scss";
 
 const VehiclesPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const objetoSearch: any = location.state;
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [filteredResults, setFilteredResults] = useState<IVehicle[]>([]);
   const [search, setSearch] = useState<string>("");
@@ -22,9 +25,9 @@ const VehiclesPage = () => {
       const payload = await getVehicles();
       setVehicles(payload);
     };
-
     fetchVehicles();
   }, []);
+
 
   const searchItems = (searchValue: string) => {
     setSearch(searchValue);
@@ -43,8 +46,8 @@ const VehiclesPage = () => {
     <div className={styles.Vehicles}>
       <main className={styles.main}>
         <div className={styles.searchInputDiv}>
-          <Search placeholder="Buscar" onChange={(e) => searchItems(e.target.value)} />
-          <FaFilter onClick={() => navigate("/filtrar")} size={30} className={styles.filterIcon} ></FaFilter>
+          <Search placeholder="&#xF002; Buscar" onChange={(e) => searchItems(e.target.value)} />
+          <BsFilterLeft onClick={() => navigate("/filtrar")} size={45} className={styles.filterIcon} ></BsFilterLeft>
         </div>
         <Button text="ADICIONAR" onClick={() => navigate("/adicionar")} />
         {search.length > 1 ? (
