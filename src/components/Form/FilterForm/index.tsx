@@ -9,29 +9,47 @@ import styles from "../Form.module.scss"
 
 
 function FilterForm() {
-    const [brandSearch, setBrand] = useState("");
-    const [colorSearch, setColor] = useState("");
-    const [yearSearch, setYear] = useState("");
-    const [minPriceSearch, setMinPrice] = useState("");
-    const [maxPriceSearch, setMaxPrice] = useState("");
+    const [brand, setBrand] = useState("1");
+    const [color, setColor] = useState("1");
+    const [year, setYear] = useState("1");
+    const [minPrice, setMinPrice] = useState("1");
+    const [maxPrice, setMaxPrice] = useState("1");
     const [vehicles, setVehicles] = useState<IVehicle[]>([]);
     const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchVehicles = async () => {
-            const payload = await getVehicles();
-            setVehicles(payload);
+          const payload = await getVehicles();
+          setVehicles(payload);
         };
-
         fetchVehicles();
-    }, []);
+      }, []);
+
+    let handleSubmit = async (e: any) => {
+        e.preventDefault();
+        try {
+            let options = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            };
+                console.log("http://localhost:5000/filtrar/" + brand + year);
+                fetch("http://localhost:5000/filtrar/" + brand + '/' + year + '/' + minPrice + '/' + maxPrice, options)
+                    .then(res => res.json())
+                    .then(json => console.log(json))
+                    .catch(err => console.error('error:' + err));
+        } catch (err) {
+            console.log(err);
+        }
+
+        setTimeout(() => navigate("/home"), 1000);
+    };
 
     
 
 
     return (
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
             <div>
                 <label>Marca: </label>
                 <input className={styles.input} name="brand" list="brands" onChange={(e) => setBrand(e.target.value)} />
@@ -68,7 +86,7 @@ function FilterForm() {
                 </label>
             </div>
 
-            <input className={styles.buttonSave} onClick={() => navigate('/home', { state: { brandSearch, colorSearch, yearSearch, minPriceSearch, maxPriceSearch } })} type="button" value="SALVAR" />
+            <input className={styles.buttonSave} type="submit" value="SALVAR" />
         </form>
     )
 }
